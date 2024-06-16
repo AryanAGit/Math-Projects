@@ -6,6 +6,7 @@
 #include <cmath>
 using namespace std;
 const int pointNum = 50000;
+//sides of the polygon to do the chaos game in 
 const int sides = 3;
 struct point {
 	double x;
