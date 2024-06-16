@@ -1,5 +1,3 @@
-// triangle.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
 
 #include <iostream>
 #include <fstream>
@@ -19,8 +17,7 @@ point randP(point c);
 int main()
 {
 
-	// ********* Generalize the Program ****************
-	//Probably done
+	
 	srand(time(0));
 	point center;
 	if (sides == 2) center = { 0.5, 0 };
@@ -91,53 +88,3 @@ point randP(point c) {
 	temp.y = (temp.x - a) * sin(angle) + (temp.y - b) * cos(angle) + b;
 	return temp;
 }
-/*
-* triangle
-* 
-* 
-* int main()
-{
-	srand(time(0));
-	point p1 = { 0, 0 };
-	point p2 = { 1, 0 };
-	point p3 = { 0.5, 0.5 * sqrt(3) };
-	point pointArray[] = {p1, p2, p3};
-	ofstream fout;
-	fout.open("ChaosGame.txt", ios::trunc);
-	random_device rd;
-	mt19937 gen(rd());
-	uniform_real_distribution<double> dist(0,1);
-	point test = { 0, 0 };
-	point randP = { 0, 0 };
-	test.x = dist(gen);
-	test.y = randY(test.x);
-	for (int i = 0; i < pointNum; i++) {
-	
-		fout << test.x << " " << test.y << endl;
-		randP = pointArray[rand() % 3];
-		test.x = 0.5*(test.x + randP.x);
-		test.y = 0.5 * (test.y + randP.y);
-
-	}
-}
-
-
-
-double randY(double x) {
-	double y;
-	if (x < 0.5) {
-		random_device rd;
-		mt19937 gen(rd());
-		uniform_real_distribution<double> dist(0, x*sqrt(3));
-		y = dist(gen);
-		return y;
-	}
-	else {
-		random_device rd;
-		mt19937 gen(rd());
-		uniform_real_distribution<double> dist(0, (1-x)*sqrt(3));
-		y = dist(gen);
-		return y;
-	}
-}
-*/
