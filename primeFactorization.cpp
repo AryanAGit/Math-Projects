@@ -88,6 +88,7 @@ void primeDecomp( int num) {
 	}
 	else if (num < 0) {
 		neg = true;
+		num *= -1;
 	}
 	else if (num == 0) {
 		cout << " Prime factorization isn't defined for 0." << endl;
