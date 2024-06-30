@@ -1,26 +1,27 @@
 //prime decomposition
-//Decomposes an integer into its prime factors
 // Once you loop through the prime list for the integer, if it %!=0 for all primes, then its a prime
-
 struct node {
 	int num;
 	node* next;
 };
 
 #include <iostream>
-#include <cstring>
-using namespace std;
+#include <vector>
 
-int findPrimes(int limit, node*& head, node*& tail, int numPrimes);
-void primeDecomp(int num);
+using namespace std;
+void primeFactorization(int limit, int& numPrimes, node*& head, node*& tail);
 int main()
 {
-	cout << "Welcome. This program does prime factor decomposition of integers. Enter an integer to factorize:  ";
+	cout << "Welcome.This program does prime factor decomposition of integers.Enter an integer to factorize or enter 0 to quit: ";
 	int limit;
 	cin >> limit;
 	cin.ignore(1000, 10);
+	node* head = new node{ 2, nullptr };
+	node* tail = new node{ 3, nullptr };
+	head->next = tail;
+	int numPrimes = 2;
 	while (limit != 0) {
-		primeDecomp(limit);
+		primeFactorization(limit, numPrimes, head, tail);
 		cout << "Press 0 to quit, or enter another integer. " << endl;
 		cin >> limit;
 		cin.ignore(1000, 10);
@@ -28,32 +29,76 @@ int main()
 	cout << "Thanks, come again!";
 }
 
-int findPrimes(int limit, node*& head, node*& tail, int numPrimes) {
+void primeFactorization(int limit, int& numPrimes, node *& head, node *& tail) {
 	int primes = numPrimes;
+	bool neg = false;
+	if (limit < 0) {
+		limit *= -1;
+		neg = true;
 
+	}
+	
+	int num =limit;
+	vector<int> factors(2, 0);
+	while (true) {
+		if (num % 2 == 0) {
+			num /= 2;
+			factors[0]++;
+		}
+		else if (num % 3 == 0) {
+			num /= 3;
+			factors[1]++;
+		}
+		else break;
+	}
+	int index = 2;
+	factors.push_back(0);
 	if (limit < 5 && limit>0)
 	{
-		if (limit >= 3)
-		{
-			cout << "There are two primes between 0 and " << limit << " inclusine" << endl;
-			cout << "2 is a prime." << endl;
-			cout << "3 is a prime." << endl;
+
+		switch (limit) {
+		case 1: {
+			if (neg) limit *= -1;
+			cout << "Prime factors of " << limit << ": " << endl;
+			cout << "\t" << limit << " to the power of 1"<<endl;
+			return;
 		}
-		else if (limit >= 2)
-		{
-			cout << "There is one prime between 0 and " << limit << " inclusive" << endl;
-			cout << "2 is a prime." << endl;
+		case 2: {
+			if (neg) limit *= -1;
+			cout << "Prime factors of " << limit << ": " << endl;
+			cout << "\t" << "2 to the power of 1" << endl;
+			if (neg) cout << "\t-1 to the power of 1" << endl;
+			return;
 		}
-		else
-		{
-			cout << "There are no primes between 0 and " << limit << " inclusive" << endl;
+		case 3: {
+			if (neg) limit *= -1;
+			cout << "Prime factors of " << limit << ": " << endl;
+			cout << "\t" << "3 to the power of 1" << endl;
+			if (neg) cout << "\t-1 to the power of 1" << endl;
+			return;
+		}
+		case 4: {
+			if (neg) limit *= -1;
+			cout << "Prime factors of " << limit << ": " << endl;
+			cout << "\t" << "2 to the power of 2" << endl;
+			if (neg) cout << "\t-1 to the power of 1" << endl;
+			return;
+		}
+		case 5: {
+			if (neg) limit *= -1;
+			cout << "Prime factors of " << limit << ": " << endl;
+			cout << "\t" << "5 to the power of 1" << endl;
+			if (neg) cout << "\t-1 to the power of 1" << endl;
+			return;
+		}
+		case 0: {
+			cout << "Prime factorization for 0 is not defined." << endl;
+			return;
+		}
 		}
 	}
 
-	else if (limit <= 0) {
-		cout << "Invalid input entered. Please enter an integer value greater than 0." << endl;
 
-	}
 
 	else {
 		for (int i = 5; i <= limit; i += 2) {
@@ -72,55 +117,35 @@ int findPrimes(int limit, node*& head, node*& tail, int numPrimes) {
 				tail->next = newPrime;
 				tail = newPrime;
 				primes++;
+				while (true) {
+					if (num % i == 0) {
+						num /= i;
+						factors[index]++;
+					}
+					else {
+						index++;
+						factors.push_back(0);
+						break;
+					}
+				}
+			}
+
+			if (num == 1) {
+				if (neg)limit *= -1;
+				cout << "Prime factors of " << limit << ": " << endl;
+				node* it = head;
+				for (int i = 0; i < primes; i++) {
+					if (factors[i] != 0) {
+						cout<<"\t" << it->num << " to the power of " << factors[i] << endl;
+					}
+					it = it->next;
+				}
+				if (neg) cout << "-1 to the power of 1" << endl;
+				cout << endl;
+				return;
 			}
 		}
+	
 	}
 
-	return primes;
-}
-
-void primeDecomp( int num) {
-	int number = num;
-	bool neg = false;
-	if (num == 1) {
-		cout << "Prime factors of 1: \n1." << endl;
-		return;
-	}
-	else if (num < 0) {
-		neg = true;
-		num *= -1;
-	}
-	else if (num == 0) {
-		cout << " Prime factorization isn't defined for 0." << endl;
-		return;
-	}
-	node* head = new node{ 2, nullptr };
-	node* tail = new node{ 3, nullptr };
-	head->next = tail;
-	int numPrimes = 2;
-	numPrimes = findPrimes(num, head, tail, numPrimes);
-	int* factors = new int[numPrimes];
-	memset(factors, 0, numPrimes * sizeof(int));
-	bool loop = true;
-	while (loop) {
-		node* it = head;
-		for (int i = 0; i < numPrimes; i++) {
-			if (num % it->num == 0) {
-				num /= it->num;
-				factors[i]++;
-			}
-			it = it->next;
-		}
-		if (num == 1) loop = false;
-		
-	}
-	node* it = head;
-	cout << "Prime factors of " << number <<": "<<endl;
-	for (int i = 0; i < numPrimes; i++) {
-		if (factors[i] != 0) {
-			cout << it->num << " to the power of " << factors[i] << endl;;
-		}
-		it = it->next;
-	}
-	if (neg) cout << "-1 to the power of 1" << endl;
 }
