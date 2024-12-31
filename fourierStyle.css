@@ -1,0 +1,18 @@
+* {
+    box-sizing: border-box; /* Include padding and border in element's total width and height */
+}
+
+body {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    height: 100vh; /* Full viewport height */
+    margin: 0; /* Remove default body margin */
+    background-color: #f0f0f0; /* Optional: set a background color */
+}
+
+#drawingCanvas {
+    border: 5px solid black; /* Add a border around the canvas */
+    position: absolute;
+}
+
